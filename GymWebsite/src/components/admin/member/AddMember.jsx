@@ -122,14 +122,13 @@ const AddMember = ({ modalOpen, handleClose, member }) => {
       }
       console.log("Response:", response.data);
 
-      handleClose();  
+      handleClose();
     } catch (error) {
       if (error.response) {
         console.error("Server responded with error:", error.response.data);
         toast.error(
-          `Error: ${
-            error.response.data.message ||
-            "Failed to submit the form. Please try again."
+          `Error: ${error.response.data.message ||
+          "Failed to submit the form. Please try again."
           }`
         );
       } else if (error.request) {
@@ -272,6 +271,56 @@ const AddMember = ({ modalOpen, handleClose, member }) => {
                 />
               </div>
             </div>
+          </div>
+          <div className="flex flex-col col-span-2">
+            <div className="flex flex-col">
+              <label className="font-medium">Payment Method</label>
+              <div className="flex space-x-4">
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-lg ${formData.paymentMethod === "Khalti" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                  onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "Khalti" }))}
+                >
+                  Khalti
+                </button>
+                <button
+                  type="button"
+                  className={`px-4 py-2 rounded-lg ${formData.paymentMethod === "Cash" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                  onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "Cash" }))}
+                >
+                  Cash
+                </button>
+              </div>
+
+              {formData.paymentMethod === "Khalti" && (
+                <div className="mt-2">
+                  <label className="font-medium">Transaction ID</label>
+                  <input
+                    type="text"
+                    name="transactionId"
+                    value={formData.transactionId || ""}
+                    onChange={handleChange}
+                    placeholder="Enter Khalti transaction ID"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 mt-1 w-full"
+                  />
+                </div>
+              )}
+
+              {formData.paymentMethod === "Cash" && (
+                <div className="mt-2">
+                  <label className="font-medium">Amount</label>
+                  <input
+                    type="text"
+                    name="amount"
+                    value={formData.amount || ""}
+                    onChange={handleChange}
+                    placeholder="Enter cash amount"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 mt-1 w-full"
+                  />
+                </div>
+              )}
+            </div>
+
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}

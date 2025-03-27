@@ -76,6 +76,7 @@ function App() {
 
     if (token && role) {
       setUserRole(role);
+      console.log(role)
       setIsLoggedIn(true);
     }
 
